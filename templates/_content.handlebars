@@ -1,0 +1,170 @@
+<p>Попробуем запомнить способы округления числа до целого.</p>
+<p>Для округления до целого числа у нас есть методы глобального объекта <span class="code">Math</span>. Их всего 4: <span class="code">Math.floor()</span>, <span class="code">Math.ceil()</span>, <span class="code">Math.round()</span> и <span class="code">Math.trunc()</span>. В статье приводятся визуальные примеры для лучшего запоминания и в конце небольшой тест для проверки ваших знаний.
+</p>
+<p>Начнём с самых (на мой взгляд) логичных: <span class="code">Math.floor()</span> и <span class="code">Math.ceil()</span> что переводится с английского как пол и потолок соответственно. Перевод этих слов уже даёт нам огромную подсказку для запоминания принципа работы каждого из методов.</p>
+<p><span class="code">Math.floor()</span> - округляет до меньшего целого числа. То есть мы всегда придавливаем число к полу.</p>
+<img src="/images/1.png" alt="как работает Math.floor()" />
+<p>
+<span class="code">Math.ceil()</span> - округляет до целого большего числа. Мы тянем число к потолку.
+</p>
+<img src="/images/2.png" alt="как работает Math.ceil()" />
+<p>В повседневной жизни мы привыкли округлять числа основываясь на близости дробного значения к целому. Близость для нас определяется половиной числа. То есть если дробное значение числа перевалило за 0,5, то мы можем сказать, что это примерно 1. Половина в нашем случае - это барьер, преодолев который число можно округлить до целого большего.</p>
+
+<p>Как раз для такого более правильного с человеческой точки зрения округления в JS существует инструмент для округления чисел: <span class="code">Math.round()</span>.</p>
+
+<p><span class="code">Math.round()</span> - возвращает число, округлённое к ближайшему целому.</p>
+<img src="/images/3.png" alt="как работает Math.round()" />
+<p>Но обратите особое внимание на отрицательную и положительную половину. Если мы дошли ровно до половины положительного числа, то мы округлим число до следующего большего числа по шкале в право. Также мы поступим с отрицательным числом. Мы округлим его до большего числа. Math.round(-2.5) // -2. То есть, видя половину наше число устремится вправо (к большему числу).</p>
+
+<p>И последний, невероятно лёгкий для понимания метод: <span class="code">Math.trunc()</span>. Метод просто возвращает целое число отбросив дробную часть. Можно просто представлять, что число не округляется, а лишается своей дробной части и вы не ошибетесь.</p>
+<img src="/images/4.png" alt="как работает Math.trunc()" />
+
+<p><span class="code">Math.trunc()</span> не работает в бразуерах до <span class="code">IE10</span>. Но существует очень лёгкий полифилл:
+</p>
+
+<pre class="js">
+    <code>
+        if (!Math.trunc) { 	Math.trunc = function(v) { 		v = +v; 		return (v - v % 1) || (!isFinite(v) || v === 0 ? v : v < 0 ? -0 : 0); 	}; }
+    </code>
+</pre>
+
+<p>Также вы можете использовать методы прототипа <span class="code">Number</span>: <span class="code">toFixed()</span> и <span class="code">toPrecision()</span>, но помните, что это не методы встроенного объекта <span class="code">Math</span> и они возвращают строку, а не число.</p>
+
+<p>Удастся ли вам сейчас без подглядываний сразу понять как округлится то или иное число? Впишите резултат округления в поле и нажмите Enter или кнопку "Дальше"
+</p>
+<br />
+<div id="round-test">
+    <div id="view">
+        <div id="testView"></div>
+    </div>
+    <input type="text" id="input" placeholder="?" />
+    <div id="button">Дальше</div>
+</div>
+<style>
+#round-test {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #6002ee;
+    overflow: hidden;
+}
+#view {
+    padding: 30px;
+    font-size: 23px;
+    font-family: monospace;
+    text-align: center;
+}
+#input {
+    width: 30px;
+    font-size: 23px;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    outline: 0;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    appearance: none;
+}
+#button {
+    background-color: #aaf255;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 20px auto;
+}
+#button:hover {
+    cursor: pointer;
+}
+</style>
+<script>
+    const roundTest = document.querySelector('#round-test');
+    const view = roundTest.querySelector('#testView');
+    const input = roundTest.querySelector('#input');
+    const button = roundTest.querySelector('#button');
+    let isFinished = false;
+    let arr = Array.from({ length: 12 }, () => (Math.random() * (10 + 10) - 10).toFixed(2));
+    let counter = 0;
+    let results = {
+        floor: {
+            numbers: arr.slice(0, 3),
+            rule: 'Math.floor(x)',
+            scores: 3,
+            counter: 0
+        },
+        ceil: {
+            numbers: arr.slice(3, 6),
+            rule: 'Math.ceil(x)',
+            scores: 3,
+            counter: 0
+        },
+        round: {
+            numbers: arr.slice(6, 9), 
+            rule: 'Math.round(x)',
+            scores: 3,
+            counter: 0
+        },
+        trunc: {
+            numbers: arr.slice(9),
+            rule: 'Math.trunc(x)',
+            scores: 3,
+            counter: 0
+        }
+    };
+    button.addEventListener('click', () => {
+        nextStep();
+    });
+    input.addEventListener('keyup', e => {
+        if (e.keyCode === 13) {
+            nextStep();
+        }
+    })
+    function nextStep () {
+        const arrOfRules = ['floor', 'ceil', 'round', 'trunc'];
+        if (Boolean(isFinished)) {
+            counter = 0;
+            isFinished = false;
+            button.innerText = 'Дальше';
+            input.style.display = 'block';
+            view.style.display = 'block';
+            Object.keys(results).forEach(res => {
+                results[res].scores = 3;
+            });
+            roundTest.querySelector('.results').remove();
+        }
+        if (counter >= 12) {
+            isFinished = true;
+            button.innerText = 'Заново';
+            let resultView = document.createElement('div');
+            resultView.classList.add('results');
+            arrOfRules.forEach(rule => {
+                resultView.innerHTML += `<div class="result-rule">Math.${rule}() - ${results[rule].scores}/3</div>`
+            })
+            roundTest.querySelector('#view').appendChild(resultView);
+            view.style.display = 'none';
+            input.style.display = 'none';
+        } else {
+            const userAnswer = input.value;
+            counter++;
+            let rightAnswer;
+            const currentNumber = counter % 4;
+            console.log('currentNumber', currentNumber);
+            const rule = arrOfRules[currentNumber];
+            const prevRule = arrOfRules[(currentNumber || 4) - 1];
+            console.log('prevRule', prevRule);
+            const innerCounter = results[rule].counter;
+            const prevInnerCounter = results[prevRule].counter;
+            const prevNumber = results[prevRule].numbers[prevInnerCounter];
+            rightAnswer = Math[prevRule](prevNumber);
+            if (Number(userAnswer) !== Number(rightAnswer)) {
+                results[prevRule].scores--;
+            }
+            view.innerText = results[rule].rule.replace('x', results[rule].numbers[innerCounter]);
+            input.value = '';
+            input.focus();
+        }
+    }
+    view.innerText = results.floor.rule.replace('x', results.floor.numbers[0]);
+</script>

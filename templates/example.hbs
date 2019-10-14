@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Media Placeholder – это заглушка (заполнитель) для видео или изображения. На место этой заглушки загрузится ваш медиа файл. В данной статье мы рассмотрим как сделать простой заполнитель с фоновым цветом, а потом с размытым изображением на фоне. Для чего это нужно?">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+    <title>Что такое Media Placeholder и как его сделать на сайте? — Love Frontend</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .d {
+            font-size: 14px;
+        }
+
+        .additions {
+            background-color: rgba(150, 150, 150, .4);
+            padding: 20px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        header {
+            height: 76px;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .lang {
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        header>.c {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        footer {
+            border-top: 1px solid lightgray;
+        }
+
+        footer>.c {
+            font-size: 14px;
+            line-height: 1.8;
+            color: gray;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        header img {
+            align-self: center;
+        }
+
+        .de {
+            display: none;
+        }
+
+        @media screen and (min-width: 768px) {
+            .c {
+                width: calc(100% - 40px);
+                margin: 0 auto;
+            }
+
+            .de {
+                display: block;
+                width: 150px;
+                font-size: 12px;
+                margin-left: 15px;
+                color: #b0b0b0;
+            }
+        }
+
+        @media screen and (min-width: 1024px) {
+            header img {
+                margin-left: 0;
+            }
+
+            footer>.c {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+    <style>
+        .c_a {
+            display: block;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .a h2 {
+            margin-top: 30px;
+        }
+
+        .a img {
+            max-width: 100%;
+        }
+
+        .h {
+            margin: 40px 0 30px;
+            line-height: 1.8;
+        }
+
+        .h a {
+            text-transform: uppercase;
+            margin-left: 15px;
+        }
+
+        .d {
+            color: #b0b0b0;
+            margin-bottom: 20px;
+        }
+
+        .a p {
+            margin-top: 25px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .a pre {
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        @media screen and (min-width: 1024px) {
+            .c_a {
+                width: 700px;
+                padding: 0;
+            }
+        }
+
+        @media screen and (min-width: 1560px) {
+            .c_a {
+                width: 990px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://lovefrontend.org/article.css">
+</head>
+
+<body>
+    <header>
+        <div class="c c_a"> <a href="/ru"><img src="https://lovefrontend.org/images/logo.svg" width="150px" alt="Love Frontend"></a>
+            <div class="de">Сообщество<br> фронтенд разработчиков</div> <a href="/en/" class="lang">EN</a>
+        </div>
+    </header>
+    <div class="a">
+        <div class="c c_a">
+            {{> content }}
+        </div>
+    </div>
+    <footer>
+        <div class="c c_a"> ©&nbsp;2017-2019 Love&nbsp;Frontend<br> <a
+                href="mailto:kamil@lovefrontend.org">kamil@lovefrontend.org</a> </div>
+    </footer>
+</body>
+<link rel="stylesheet" href="/article.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/zenburn.min.css">
+<script src="/highlight/highlight.pack.js"></script>
+<script> hljs.configure({ useBR: true }); hljs.initHighlightingOnLoad();</script>
+
+</html>
